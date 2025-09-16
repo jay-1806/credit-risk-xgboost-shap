@@ -1,19 +1,41 @@
 # Credit Risk Prediction — XGBoost + SHAP
-![python](https://img.shields.io/badge/Python-3.10+-blue)
-![license](https://img.shields.io/badge/License-MIT-green)
-![status](https://img.shields.io/badge/Status-WIP-orange)
 
-Predict credit risk using an XGBoost pipeline with explainable AI (SHAP). Designed for finance teams that need both high performance **and** transparent, audit-friendly insights.
+Predict credit risk on LendingClub loan data with an end-to-end ML pipeline (feature engineering → model training → explainability) and a Streamlit dashboard for interactive insights.
 
 ## Highlights
-- **Model:** XGBoost classifier with robust preprocessing and hyperparameter tuning
-- **Performance:** ROC-AUC ≈ **0.92** on LendingClub test data
-- **Explainability:** SHAP summary/force plots to explain global & local predictions
-- **App:** Streamlit dashboard to explore borrower segments and risk drivers
+- **Model:** XGBoost classifier with Scikit-learn `Pipeline` + hyperparameter tuning.
+- **Performance:** ROC-AUC ≈ **0.92** on a held-out test split.
+- **Explainability:** SHAP global (summary) and local (force) explanations for auditability.
+- **App:** Streamlit UI to explore risk by borrower segments and top SHAP features.
+
+## Tech Stack
+Python, XGBoost, scikit-learn, SHAP, Pandas, NumPy, Matplotlib/Plotly, Streamlit, Docker
 
 ## Dataset
-- **Source:** LendingClub public loan data (documented in repo)
-- **Notes:** Includes cleaning, feature engineering (dates, ratios, categorical encodings)
-- Ensure compliance with data usage and privacy requirements
+- LendingClub public loan data (documented preprocessing: cleaning, feature typing, leakage checks).
+- Train/val/test split with stratification; metrics: ROC-AUC, PR-AUC, calibration.
 
 ## Project Structure
+credit-risk-xgboost-shap/
+├─ app/ # Streamlit dashboard
+│ ├─ Home.py
+│ └─ pages/
+│ ├─ 1_SHAP_Explorer.py
+│ └─ 2_Segments.py
+├─ data/
+│ ├─ raw/ # (paths only; large files excluded)
+│ └─ processed/
+├─ src/
+│ ├─ features/ # feature engineering, encoders
+│ │ └─ build_features.py
+│ ├─ models/
+│ │ ├─ evaluate.py
+│ ├─ explain/
+│ │ └─ plots.py
+│ └─ io.py
+├─ configs/
+│ ├─ params.yaml # model & preprocessing params
+├─ tests/
+│ └─ test_models.py
+├─ requirements.txt
+└─ README.md
